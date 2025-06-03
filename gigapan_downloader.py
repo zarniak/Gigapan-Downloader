@@ -124,22 +124,23 @@ def download_tiles(out_folder, output_format, img_id, session, tiles_url, height
 
     print("Stitching... ")
     for line in range(height_tiles):
-        subprocess.run([
-                f"{montage_command} -depth 8 -geometry {tile_size_px}x{tile_size_px}+0+0 \
-                -mode concatenate -tile {width_tiles}x \
-                {out_folder}/{img_id}/{line:04}-*.jpg \
-                {out_folder}/{img_id}/line-{line:04}.{output_format}"
-            ], shell=True, check=True,
+        command_str_line = (
+            f'"{montage_command}" -depth 8 -geometry {tile_size_px}x{tile_size_px}+0+0 '
+            f'-mode concatenate -tile {width_tiles}x '
+            f'"{out_folder / str(img_id) / f"{line:04}-*.jpg"}" '
+            f'"{out_folder / str(img_id) / f"line-{line:04}.{output_format}"}"'
         )
+        subprocess.run(command_str_line, shell=True, check=True)
 
     final_width_px = width_tiles * tile_size_px
-    subprocess.run([
-            f"{montage_command} -depth 8 -geometry {final_width_px}x{tile_size_px}+0+0 \
-            -mode concatenate -tile x{height_tiles} \
-            {out_folder}/{img_id}/line-*.{output_format} \
-            {out_folder}/{img_id}-giga.{output_format}"
-        ], shell=True, check=True,
+    command_str_final = (
+        f'"{montage_command}" -depth 8 -geometry {final_width_px}x{tile_size_px}+0+0 '
+        f'-mode concatenate -tile x{height_tiles} '
+        f'"{out_folder / str(img_id) / f"line-*.{output_format}"}" '
+        f'"{out_folder / f"{img_id}-giga.{output_format}"}"'
     )
+    subprocess.run(command_str_final, shell=True, check=True)
+
     print("Finished!")
 
 def main(img_name, req_level, out_folder, output_format, dry_run, retries):
