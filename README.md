@@ -14,8 +14,9 @@ any GNU/Linux. Can resume downloads, since downloaded tiles are not reloaded.
    `http://www.imagemagick.org/script/binary-releases.php#windows` (Windows). I
    recommend install `ImageMagick-*-x64-static.exe` x64 version, if you have x64
    OS. For Linux use `yum install imagemagick` or a similar command.
-3. Download this script in a ZIP file using the green button on GitHub.
-4. Edit script to change the path to Imagemagick (named montage) if necessary
+   Note: tick legacy components to get montage.exe in you imagemagick folder
+4. Download this script in a ZIP file using the green button on GitHub.
+5. Edit script to change the path to Imagemagick (named montage) if necessary
 
 ## Running
 
